@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  playwright:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: playwright-test-runner
+    environment:
+      - PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
+      - PLAYWRIGHT_SKIP_DEPENDENCY_INSTALL=0
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    command: npx playwright test
+    # Uncomment to run specific tests
+    # command: npx playwright test tests/registration/user-registration-flow.spec.ts
+    # Uncomment to run with specific browser
+    # command: npx playwright test --project=chromium
+
+  # Development service with interactive shell
+  playwright-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: playwright-dev
+    environment:
+      - PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    # Use: docker-compose run playwright-dev to access interactive shell
