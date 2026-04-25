@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+test-results
+playwright-report
+.git
+.gitignore
+.vscode
+.env
+.env.local
+*.md
+.DS_Store
